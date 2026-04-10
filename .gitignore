@@ -1,0 +1,39 @@
+# Python virtual environments
+*.venv/
+*.env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Node modules
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# OS-specific files
+desktop.ini
+Thumbs.db
+
+# .NET build output
+bin/
+obj/
+
+# JobFit tracker database
+*.db
+*.db-shm
+*.db-wal
+.pytest_cache/
+
+# .NET build output
+bin/
+obj/
+.vs/
+*.user
