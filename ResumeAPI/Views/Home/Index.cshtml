@@ -1,0 +1,417 @@
+@model ResumeMatchPageViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Resume Matching System";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --page-bg: linear-gradient(135deg, #f7f9fc 0%, #edf7f2 52%, #fffdf7 100%);
+            --panel-border: rgba(20, 33, 61, 0.08);
+            --panel-shadow: 0 18px 40px rgba(31, 41, 55, 0.08);
+            --preview-bg: #f8fafc;
+            --hero-text: #0f172a;
+            --muted-text: #475569;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--page-bg);
+            color: var(--hero-text);
+        }
+
+        .page-shell {
+            max-width: 1180px;
+        }
+
+        .section-card {
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--panel-shadow);
+            border-radius: 1.25rem;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+        }
+
+        .keyword-badge {
+            font-size: 0.85rem;
+            margin: 0.25rem 0.25rem 0 0;
+        }
+
+        .step-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 999px;
+            background: #0f172a;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .preview-box {
+            border: 1px solid #dbe4ee;
+            border-radius: 1rem;
+            background: var(--preview-bg);
+            padding: 1rem;
+            white-space: pre-wrap;
+            max-height: 240px;
+            overflow: auto;
+        }
+
+        .action-strip {
+            border: 1px solid var(--panel-border);
+            border-radius: 1.25rem;
+            box-shadow: var(--panel-shadow);
+            background: rgba(15, 23, 42, 0.96);
+            color: white;
+        }
+
+        .muted-note {
+            color: var(--muted-text);
+        }
+
+        .textarea-disabled {
+            background: #eef2f7;
+            cursor: not-allowed;
+        }
+
+        .questions-list li {
+            margin-bottom: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5 page-shell">
+        <div class="section-card p-4 p-lg-5 mb-4">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <span class="badge text-bg-dark mb-3">Interview Demo</span>
+                    <h1 class="fw-bold mb-2">Resume Matching System</h1>
+                    <p class="muted-note mb-0">
+                        Add a resume plus a job description, then generate a clean match summary with strengths, recommendations, and interview-ready prompts.
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="rounded-4 border p-3 bg-light-subtle">
+                        <div class="small text-uppercase text-secondary fw-semibold mb-2">Current Status</div>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="d-flex justify-content-between">
+                                <span class="muted-note">Resume</span>
+                                <span class="badge @(Model.HasResumePreview ? "text-bg-success" : "text-bg-secondary")">
+                                    @(Model.HasResumePreview ? "Ready" : "Waiting")
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="muted-note">Job Description</span>
+                                <span class="badge @(Model.HasJobDescriptionPreview ? "text-bg-success" : "text-bg-secondary")">
+                                    @(Model.HasJobDescriptionPreview ? "Ready" : "Waiting")
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="muted-note">Match Result</span>
+                                <span class="badge @(Model.HasMatchResult ? "text-bg-primary" : "text-bg-secondary")">
+                                    @(Model.HasMatchResult ? "Generated" : "Not Run")
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.PageMessage))
+        {
+            <div class="alert alert-success">@Model.PageMessage</div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.PageError))
+        {
+            <div class="alert alert-danger">@Model.PageError</div>
+        }
+
+        @if (!ViewContext.ViewData.ModelState.IsValid)
+        {
+            <div asp-validation-summary="ModelOnly" class="alert alert-warning"></div>
+        }
+
+        <form asp-action="MatchResume" asp-controller="Home" method="post" enctype="multipart/form-data">
+            <input asp-for="ResumeId" type="hidden" />
+            <input asp-for="ResumeDisplayName" type="hidden" />
+            <input asp-for="UploadedResumeFileName" type="hidden" />
+            <input asp-for="UploadedResumePreview" type="hidden" />
+            <input asp-for="UploadedJobDescriptionFileName" type="hidden" />
+            <input asp-for="UploadedJobDescriptionPreview" type="hidden" />
+            <input asp-for="JobDescriptionContent" type="hidden" />
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card section-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <span class="step-label">1</span>
+                                <div>
+                                    <h5 class="card-title mb-0">Resume</h5>
+                                    <div class="small muted-note">Choose the candidate resume file. Once loaded, you can keep updating the job description without re-uploading the resume.</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="ResumeFile" class="form-label fw-semibold">Resume File</label>
+                                <input asp-for="ResumeFile" class="form-control" type="file" accept=".txt,.md,.csv,.log,.json,.pdf,.docx" />
+                                <span asp-validation-for="ResumeFile" class="text-danger small"></span>
+                                <div class="form-text">Supported files: .txt, .md, .csv, .log, .json, .pdf, .docx</div>
+                            </div>
+
+                            @if (Model.ResumeId.HasValue)
+                            {
+                                <div class="mt-3 small text-success">
+                                    Resume ready for matching
+                                </div>
+                            }
+
+                            @if (Model.HasResumePreview)
+                            {
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center small text-secondary mb-2">
+                                        <span>Uploaded File: <strong>@Model.UploadedResumeFileName</strong></span>
+                                        <span class="badge text-bg-light border">@Model.ResumeDisplayName</span>
+                                    </div>
+                                    <div class="preview-box small">
+                                        @Model.UploadedResumePreview
+                                    </div>
+                                    <div class="small text-secondary mt-2">
+                                        This resume stays active while you change the job description and run additional matches.
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card section-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <span class="step-label">2</span>
+                                <div>
+                                    <h5 class="card-title mb-0">Job Description</h5>
+                                    <div class="small muted-note">Paste the role description directly or upload a file. Use one source at a time for a cleaner flow.</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="JobDescriptionText" class="form-label fw-semibold">Paste Job Description</label>
+                                <textarea asp-for="JobDescriptionText"
+                                          id="jobDescriptionText"
+                                          class="form-control"
+                                          rows="7"
+                                          placeholder="Paste the full job description here if you don't want to upload a file."></textarea>
+                                <span asp-validation-for="JobDescriptionText" class="text-danger small"></span>
+                            </div>
+
+                            <div class="text-center small text-secondary text-uppercase fw-semibold mb-3">or</div>
+
+                            <div class="mb-3">
+                                <label asp-for="JobDescriptionFile" class="form-label fw-semibold">Job Description File</label>
+                                <input asp-for="JobDescriptionFile"
+                                       id="jobDescriptionFile"
+                                       class="form-control"
+                                       type="file"
+                                       accept=".txt,.md,.csv,.log,.json,.pdf,.docx" />
+                                <span asp-validation-for="JobDescriptionFile" class="text-danger small"></span>
+                                <div class="form-text">Upload a JD file if you prefer not to paste the text.</div>
+                            </div>
+
+                            @if (Model.HasJobDescriptionPreview)
+                            {
+                                <div class="mt-3">
+                                    <div class="small text-secondary mb-2">
+                                        Uploaded JD File: <strong>@Model.UploadedJobDescriptionFileName</strong>
+                                    </div>
+                                    <div class="preview-box small">
+                                        @Model.UploadedJobDescriptionPreview
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-strip mt-4 p-4">
+                <div class="row align-items-center g-3">
+                    <div class="col-lg-8">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="step-label bg-white text-dark">3</span>
+                            <div>
+                                <div class="fw-semibold">Generate Match Summary</div>
+                                <div class="small text-white-50">One click will process the resume, read the job description, and produce the final fit analysis.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning btn-lg fw-semibold">
+                                Match Resume
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <span asp-validation-for="ResumeId" class="text-danger small d-block mt-2"></span>
+                <span asp-validation-for="JobDescriptionContent" class="text-danger small d-block mt-1"></span>
+            </div>
+        </form>
+
+        @if (Model.HasMatchResult)
+        {
+            <div class="card section-card mt-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
+                        <div>
+                            <h5 class="card-title mb-1">Match Summary</h5>
+                            <p class="text-secondary mb-0">@Model.MatchResult!.DetailedSummary</p>
+                        </div>
+                        <span class="badge text-bg-secondary fs-6">@Model.MatchResult.MatchLabel</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-semibold">Overall Score: @Model.MatchResult!.ScorePercentage%</span>
+                        <span class="text-secondary small">@Model.ResumeDisplayName</span>
+                    </div>
+
+                    <div class="progress mb-4" role="progressbar" aria-label="Match score progress">
+                        <div class="progress-bar @Model.MatchResult.ProgressBarCssClass"
+                             style="width:@Model.MatchResult.ScorePercentage%">
+                            @Model.MatchResult.ScorePercentage%
+                        </div>
+                    </div>
+
+                    <div class="border rounded-4 p-3 mb-4 bg-light-subtle">
+                        <h6 class="mb-2">Recommendation</h6>
+                        <p class="mb-0 text-secondary">@Model.MatchResult.RecommendationSummary</p>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="border rounded-4 p-3 h-100 bg-light-subtle">
+                                <h6 class="mb-2">Strengths Found</h6>
+                                <p class="text-secondary small mb-3">@Model.MatchResult.StrengthsSummary</p>
+                                @if (Model.MatchResult.MatchedKeywords.Count == 0)
+                                {
+                                    <span class="text-secondary">No major strengths were surfaced from the keyword comparison.</span>
+                                }
+                                else
+                                {
+                                    foreach (var keyword in Model.MatchResult.MatchedKeywords)
+                                    {
+                                        <span class="badge text-bg-success keyword-badge">@keyword</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="border rounded-4 p-3 h-100 bg-light-subtle">
+                                <h6 class="mb-2">Areas To Strengthen</h6>
+                                <p class="text-secondary small mb-3">@Model.MatchResult.GapsSummary</p>
+                                @if (Model.MatchResult.MissingKeywords.Count == 0)
+                                {
+                                    <span class="text-secondary">No major gap areas were detected from the provided job description.</span>
+                                }
+                                else
+                                {
+                                    foreach (var keyword in Model.MatchResult.MissingKeywords)
+                                    {
+                                        <span class="badge text-bg-danger keyword-badge">@keyword</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.HasMatchResult && Model.MatchResult!.HasInterviewQuestions)
+        {
+            <div class="card section-card mt-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
+                        <div>
+                            <h5 class="card-title mb-1">Suggested Interview Questions</h5>
+                            <p class="text-secondary mb-0">
+                                Because this match is above 85%, here are ten focused questions you can use to validate real depth against the uploaded role.
+                            </p>
+                        </div>
+                        <span class="badge text-bg-success fs-6">High Match</span>
+                    </div>
+
+                    <ol class="questions-list mb-0">
+                        @foreach (var question in Model.MatchResult.InterviewQuestions)
+                        {
+                            <li>@question</li>
+                        }
+                    </ol>
+                </div>
+            </div>
+        }
+    </div>
+
+    <script>
+        (() => {
+            const textArea = document.getElementById('jobDescriptionText');
+            const fileInput = document.getElementById('jobDescriptionFile');
+
+            if (!textArea || !fileInput) {
+                return;
+            }
+
+            const syncInputs = () => {
+                const hasTypedText = textArea.value.trim().length > 0;
+                const hasFile = fileInput.files && fileInput.files.length > 0;
+
+                if (hasTypedText) {
+                    fileInput.disabled = true;
+                    fileInput.classList.add('opacity-50');
+                } else {
+                    fileInput.disabled = false;
+                    fileInput.classList.remove('opacity-50');
+                }
+
+                if (hasFile) {
+                    textArea.disabled = true;
+                    textArea.classList.add('textarea-disabled');
+                } else {
+                    textArea.disabled = false;
+                    textArea.classList.remove('textarea-disabled');
+                }
+            };
+
+            textArea.addEventListener('input', () => {
+                if (textArea.value.trim().length > 0) {
+                    fileInput.value = '';
+                }
+                syncInputs();
+            });
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files && fileInput.files.length > 0) {
+                    textArea.value = '';
+                }
+                syncInputs();
+            });
+
+            syncInputs();
+        })();
+    </script>
+</body>
+</html>
