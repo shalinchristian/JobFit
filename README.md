@@ -53,4 +53,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 &nbsp;
-For more information or inquiries, please contact the author at shalinchristian@example.com.
+For more information or inquiries, please contact the author at shalinchristian71@gmail.com.
