@@ -1,56 +1,162 @@
-# Resume Matching System
+# 📄 Resume Matching System
 
-## Overview
-&nbsp;
-The Resume Matching System is a sophisticated tool designed to automate the process of matching job descriptions with resumes submitted by applicants. This project leverages natural language processing (NLP) techniques to analyze and compare the content of resumes and job descriptions effectively. 
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Features
-&nbsp;
-- **Keyword Extraction**: Automatically extracts key skills and qualifications from resumes and job descriptions.
-- **Ranking System**: A scoring algorithm that ranks resumes based on their relevance to the job description.
-- **Matching Visualization**: Provides visual feedback on the matching process to help recruiters interpret results easily.
+---
 
-## Technologies Used
-&nbsp;
-- Python
-- Flask (for web application)
-- Scikit-learn (for machine learning)
-- Natural Language Toolkit (NLTK)
-- Frontend Technologies: HTML, CSS, JavaScript
+## 🚀 Overview
+The **Resume Matching System** is an intelligent application designed to automate the process of matching resumes with job descriptions. It uses **Natural Language Processing (NLP)** and machine learning techniques to evaluate candidate suitability and rank resumes based on relevance.
 
-## Installation
-&nbsp;
-1. Clone the repository:
+This tool helps recruiters **save time**, **reduce manual screening effort**, and **improve hiring accuracy**.
+
+---
+
+## ✨ Features
+
+- 🔍 **Keyword Extraction**  
+  Automatically identifies key skills, qualifications, and requirements from resumes and job descriptions.
+
+- 📊 **Resume Ranking System**  
+  Scores and ranks resumes based on similarity and relevance.
+
+- 📈 **Matching Visualization**  
+  Provides clear visual insights into how well a resume matches the job description.
+
+- 💡 **Improvement Suggestions**  
+  Offers actionable recommendations to enhance resume quality.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category     | Technologies Used              |
+|--------------|------------------------------|
+| **Backend**  | Python, Flask                |
+| **ML**       | Scikit-learn                 |
+| **NLP**      | NLTK                         |
+| **Frontend** | HTML, CSS, JavaScript        |
+| **Deployment** | Docker                    |
+
+---
+
+
+## 📸 Screenshots
+
+### 🏠 Homepage
+![Homepage](images/homepage.png)
+
+### 📊 Matching Result
+![Matching Result](images/match_click.png)
+
+---
+
+## ⚙️ Installation & Setup
+
+### 🔹 Option 1: Run with Docker (Recommended)
+
+1. **Clone the repository**
    ```bash
    git clone https://github.com/shalinchristian/ResumeMatchingSystem.git
-   ```
-2. Navigate to the project directory:
-   ```bash
    cd ResumeMatchingSystem
    ```
-3. Install the required packages:
+
+2. **Build Docker Image**
+   ```bash
+   docker build -t resume-matcher .
+   ```
+
+3. **Run the Container**
+   ```bash
+   docker run -p 5000:5000 resume-matcher
+   ```
+
+4. **Open in browser**
+   ```
+   http://localhost:5000
+   ```
+
+---
+
+### 🔹 Option 2: Run without Docker
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/shalinchristian/ResumeMatchingSystem.git
+   cd ResumeMatchingSystem
+   ```
+
+2. **Create virtual environment (recommended)**
+   ```bash
+   python -m venv venv
+   ```
+
+   - Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
+   - Mac/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+
+3. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
-4. Run the application:
+
+4. **Run the application**
    ```bash
    python app.py
    ```
 
-## Usage
-&nbsp;
-1. Upload a resume in PDF or Word format.
-2. Paste the job description in the provided text area.
-3. Click 'Match' to see the results. The system will display a ranking along with suggestions for enhancing the resume based on the job description.
+5. **Open in browser**
+   ```
+   http://localhost:5000
+   ```
 
-## Contribution
-&nbsp;
-Feel free to fork the repository and submit a pull request. For any issues, open an issue on GitHub.
+---
 
-## License
-&nbsp;
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+## 🧠 How It Works
 
-## Contact
-&nbsp;
-For more information or inquiries, please contact the author at shalinchristian71@gmail.com.
+1. **Upload** a resume (PDF/DOCX)  
+2. **Paste** the job description  
+3. **Click Match**
+
+### 🔄 Processing Steps:
+- Text preprocessing  
+- Feature extraction  
+- Similarity scoring  
+
+### 📊 Output:
+- Match score  
+- Ranking  
+- Suggestions  
+
+---
+
+## 🤝 Contribution
+
+Contributions are welcome!
+
+1. Fork the repository  
+2. Create a new branch  
+3. Commit your changes  
+4. Submit a Pull Request  
+
+> For major changes, please open an issue first.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.  
+See the `LICENSE` file for details.
+
+---
+
+## 📬 Contact
+
+**Shalin Christian**  
+📧 shalinchristian71@gmail.com
