@@ -1,0 +1,74 @@
+@model List<JobApplication>
+@{
+    ViewData["Title"] = "My applications";
+    string? status = ViewBag.Status;
+}
+
+<div class="page-head">
+    <h1>My applications</h1>
+    <a class="btn" asp-action="Create">+ Add application</a>
+</div>
+
+<form method="get" asp-action="Index" class="filter">
+    <label for="status">Status</label>
+    <select id="status" name="status" onchange="this.form.submit()">
+        <option value="">All</option>
+        @foreach (string s in JobApplication.Statuses)
+        {
+            <option value="@s" selected="@(s == status)">@s</option>
+        }
+    </select>
+    <noscript><button type="submit" class="btn small">Filter</button></noscript>
+    <span class="muted">@Model.Count shown</span>
+</form>
+
+@if (Model.Count == 0)
+{
+    <div class="card empty">
+        @if (status == null)
+        {
+            <p>You haven't added any applications yet.</p>
+            <a class="btn" asp-action="Create">Add your first one</a>
+        }
+        else
+        {
+            <p>No applications with status "@status".</p>
+        }
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Location</th>
+                <th>Applied on</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (JobApplication app in Model)
+            {
+                <tr>
+                    <td data-label="Company"><strong>@app.Company</strong></td>
+                    <td data-label="Role">@app.Role</td>
+                    <td data-label="Location">@(app.Location ?? "-")</td>
+                    <td data-label="Applied on" class="nowrap">@app.AppliedDate.ToString("dd MMM yyyy")</td>
+                    <td data-label="Status"><span class="status status-@app.Status.ToLower()">@app.Status</span></td>
+                    <td data-label="Notes" class="notes">@app.Notes</td>
+                    <td class="actions">
+                        <a class="btn small light" asp-action="Edit" asp-route-id="@app.AppID">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@app.AppID" method="post" class="inline"
+                              onsubmit="return confirm('Delete this application?');">
+                            <button type="submit" class="btn small danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
