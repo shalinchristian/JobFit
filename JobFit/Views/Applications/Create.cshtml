@@ -1,0 +1,13 @@
+@model JobApplication
+@{ ViewData["Title"] = "Add application"; }
+
+<div class="card form-card">
+    <h1>Add application</h1>
+    <form asp-action="Create" method="post">
+        <partial name="_Form" model="Model" />
+        <div class="buttons">
+            <button type="submit" class="btn">Save</button>
+            <a class="btn light" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</div>

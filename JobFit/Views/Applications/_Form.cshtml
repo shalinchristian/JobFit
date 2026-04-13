@@ -1,0 +1,35 @@
+@model JobApplication
+
+<div asp-validation-summary="ModelOnly" class="error"></div>
+
+<div class="grid">
+    <div>
+        <label asp-for="Company"></label>
+        <input asp-for="Company" />
+        <span asp-validation-for="Company" class="error"></span>
+    </div>
+    <div>
+        <label asp-for="Role"></label>
+        <input asp-for="Role" />
+        <span asp-validation-for="Role" class="error"></span>
+    </div>
+    <div>
+        <label asp-for="Location"></label>
+        <input asp-for="Location" />
+        <span asp-validation-for="Location" class="error"></span>
+    </div>
+    <div>
+        <label asp-for="AppliedDate"></label>
+        <input asp-for="AppliedDate" />
+        <span asp-validation-for="AppliedDate" class="error"></span>
+    </div>
+    <div>
+        <label asp-for="Status"></label>
+        <select asp-for="Status" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(JobApplication.Statuses))"></select>
+        <span asp-validation-for="Status" class="error"></span>
+    </div>
+</div>
+
+<label asp-for="Notes"></label>
+<textarea asp-for="Notes" rows="3"></textarea>
+<span asp-validation-for="Notes" class="error"></span>
