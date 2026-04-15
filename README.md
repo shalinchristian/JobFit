@@ -7,7 +7,7 @@
 ---
 
 ## 🚀 Overview
-The **Resume Matching System** is an intelligent application designed to automate the process of matching resumes with job descriptions. It uses **Natural Language Processing (NLP)** and machine learning techniques to evaluate candidate suitability and rank resumes based on relevance.
+The **Resume Matching System** is an intelligent application designed to automate the process of matching resumes with job descriptions. It uses **Natural Language Processing (NLP)** and machine learning to analyze and score resumes against job requirements.
 
 This tool helps recruiters **save time**, **reduce manual screening effort**, and **improve hiring accuracy**.
 
@@ -41,7 +41,6 @@ This tool helps recruiters **save time**, **reduce manual screening effort**, an
 
 ---
 
-
 ## 📸 Screenshots
 
 ### 🏠 Homepage
@@ -54,67 +53,25 @@ This tool helps recruiters **save time**, **reduce manual screening effort**, an
 
 ## ⚙️ Installation & Setup
 
-### 🔹 Option 1: Run with Docker (Recommended)
+### 🚀 Quick Start with Docker (Recommended)
 
-1. **Clone the repository**
+1. **Clone the repository**  
    ```bash
    git clone https://github.com/shalinchristian/ResumeMatchingSystem.git
    cd ResumeMatchingSystem
    ```
 
-2. **Build Docker Image**
+2. **Start with Docker Compose**  
    ```bash
-   docker build -t resume-matcher .
+   docker-compose up --build
    ```
 
-3. **Run the Container**
-   ```bash
-   docker run -p 5000:5000 resume-matcher
-   ```
-
-4. **Open in browser**
+3. **Open in browser**  
    ```
    http://localhost:5000
    ```
 
----
-
-### 🔹 Option 2: Run without Docker
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/shalinchristian/ResumeMatchingSystem.git
-   cd ResumeMatchingSystem
-   ```
-
-2. **Create virtual environment (recommended)**
-   ```bash
-   python -m venv venv
-   ```
-
-   - Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - Mac/Linux:
-     ```bash
-     source venv/bin/activate
-     ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Run the application**
-   ```bash
-   python app.py
-   ```
-
-5. **Open in browser**
-   ```
-   http://localhost:5000
-   ```
+That's it! 🎉 Both the API and Python service will start automatically.
 
 ---
 
@@ -133,6 +90,19 @@ This tool helps recruiters **save time**, **reduce manual screening effort**, an
 - Match score  
 - Ranking  
 - Suggestions  
+
+---
+
+## 📝 Local Development (Advanced)
+
+If you prefer to run without Docker:
+
+1. Install Python 3.8+ and required dependencies
+2. Create a virtual environment: `python -m venv venv`
+3. Activate it and install requirements: `pip install -r requirements.txt`
+4. Run services separately on different ports
+
+For detailed setup, check individual service READMEs.
 
 ---
 
