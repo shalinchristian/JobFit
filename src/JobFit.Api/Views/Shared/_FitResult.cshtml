@@ -1,0 +1,92 @@
+@model FitResultViewModel
+@{
+    const double r = 52;
+    var circumference = 2 * Math.PI * r;
+    var dash = circumference * Model.ScoreRounded / 100.0;
+    var matchedSkills = Model.Matched.Where(SkillCatalog.IsSkill).Select(SkillCatalog.Display).Distinct().ToList();
+    var missingSkills = Model.Missing.Where(SkillCatalog.IsSkill).Select(SkillCatalog.Display).Distinct().ToList();
+}
+
+@if (Model.UsedFallback)
+{
+    <div class="alert alert-info" role="status">
+        <strong>Quick score.</strong> The semantic matching service isn't running, so this score is based on keyword overlap. Start the Python service for a more accurate score.
+    </div>
+}
+
+<section class="card result-hero tone-@Model.Tone">
+    <div class="ring" role="img" aria-label="Match score @Model.ScoreRounded out of 100">
+        <svg viewBox="0 0 120 120" width="148" height="148">
+            <circle class="ring-track" cx="60" cy="60" r="@r" />
+            <circle class="ring-value" cx="60" cy="60" r="@r"
+                    stroke-dasharray="@dash.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) @circumference.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)"
+                    transform="rotate(-90 60 60)" />
+        </svg>
+        <div class="ring-label"><strong>@Model.ScoreRounded</strong><span>/ 100</span></div>
+    </div>
+    <div class="result-meta">
+        <span class="pill tone-pill">@Model.Label</span>
+        <h1>@Model.JobTitle</h1>
+        <p class="company">@(string.IsNullOrWhiteSpace(Model.Company) ? "Company not set" : Model.Company)@(Model.CheckedAt is DateTime d ? " · checked " + d.ToLocalTime().ToString("d MMM yyyy") : "")</p>
+        <p class="summary">@Model.Summary</p>
+        <div class="stats">
+            <div><strong>@matchedSkills.Count</strong><span>@(matchedSkills.Count == 1 ? "skill" : "skills") matched</span></div>
+            <div><strong>@missingSkills.Count</strong><span>@(missingSkills.Count == 1 ? "skill" : "skills") missing</span></div>
+            <div><strong>@Model.GapPlan.Count</strong><span>@(Model.GapPlan.Count == 1 ? "action" : "actions")</span></div>
+        </div>
+    </div>
+</section>
+
+<div class="grid-2 cols-top">
+    <section class="card">
+        <h2 class="card-title"><span class="dot dot-green"></span>You have</h2>
+        @if (matchedSkills.Count == 0)
+        {
+            <p class="empty">No overlap found yet.</p>
+        }
+        <div class="chips">
+            @foreach (var s in matchedSkills) { <span class="chip chip-yes">@s</span> }
+        </div>
+    </section>
+    <section class="card">
+        <h2 class="card-title"><span class="dot dot-red"></span>Missing from your resume</h2>
+        @if (missingSkills.Count == 0)
+        {
+            <p class="empty">Nothing major is missing.</p>
+        }
+        <div class="chips">
+            @foreach (var s in missingSkills) { <span class="chip chip-no">@s</span> }
+        </div>
+    </section>
+</div>
+
+<section class="card">
+    <h2 class="card-title">Gap plan <span class="count">@Model.GapPlan.Count</span></h2>
+    @if (Model.GapPlan.Count == 0)
+    {
+        <p class="empty">No gaps to close. Apply with confidence.</p>
+    }
+    else
+    {
+        <ol class="plan">
+            @foreach (var item in Model.GapPlan)
+            {
+                var tag = item.Action switch { GapAction.Learn => "Learn", GapAction.ShowProject => "Show a project", _ => "Reword" };
+                <li>
+                    <span class="plan-tag tag-@item.Action.ToString().ToLowerInvariant()">@tag</span>
+                    <div><strong>@item.Skill</strong><p>@item.Advice</p></div>
+                </li>
+            }
+        </ol>
+    }
+</section>
+
+<section class="card">
+    <h2 class="card-title">Interview prep <span class="count">@Model.InterviewQuestions.Count</span></h2>
+    <ol class="questions">
+        @foreach (var q in Model.InterviewQuestions)
+        {
+            <li>@q</li>
+        }
+    </ol>
+</section>

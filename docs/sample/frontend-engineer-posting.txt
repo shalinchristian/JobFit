@@ -1,0 +1,5 @@
+Frontend Engineer - Lumen Studio
+We're looking for a Frontend Engineer to build fast, accessible web apps.
+You will work in React and TypeScript, style with CSS and Tailwind, and write Jest and Playwright tests.
+Experience with Next.js, GraphQL and Figma handoffs is a plus. We value accessibility, performance
+and clear communication with designers and product managers. Our stack runs on AWS with CI/CD on GitHub.

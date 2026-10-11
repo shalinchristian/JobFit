@@ -1,0 +1,3 @@
+Rahul Verma - Data Analyst
+Skills: SQL, MySQL, Excel, Python, pandas, Tableau, statistics, data visualization
+Experience: Built Tableau dashboards for sales; wrote SQL queries; analysed datasets with pandas; ran A/B tests.

@@ -1,0 +1,10 @@
+Alex Rivera - Software Developer
+Summary: Full-stack developer with 3 years building web apps in C#, .NET and React.
+Skills: C#, ASP.NET Core, .NET, React, JavaScript, TypeScript, SQL, PostgreSQL, Docker, Git, GitHub, REST APIs, xUnit, Agile
+Experience:
+- Built a REST API in ASP.NET Core with EF Core and PostgreSQL serving 20k daily requests.
+- Built React dashboards with TypeScript; cut page load time by 40%.
+- Containerized three services with Docker and set up GitHub Actions builds.
+- Wrote xUnit tests that raised coverage from 35% to 80%.
+- Worked in an Agile team of six with two-week sprints; presented demos to stakeholders.
+Projects: Budget tracker (React + ASP.NET Core), weather CLI in Python.

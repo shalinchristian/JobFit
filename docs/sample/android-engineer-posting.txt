@@ -1,0 +1,12 @@
+Android Engineer (Kotlin) - Pebble Health, Kozhikode
+Help us build our patient-facing Android app used by 2 million people.
+Responsibilities:
+- Build features in Kotlin with Jetpack Compose and MVVM architecture
+- Use Coroutines and Flow for async work; Room for local storage; Retrofit for networking
+- Dependency injection with Hilt/Dagger
+- Write unit tests with JUnit and Mockito and UI tests with Espresso
+- Publish releases through Google Play Console; monitor crashes with Firebase Crashlytics
+- Work with REST APIs and GraphQL; collaborate closely with iOS (Swift) and backend teams
+Requirements: 3+ years of Android development, Kotlin, Jetpack, Git, and Gradle.
+Nice to have: Java, Kotlin Multiplatform, accessibility.
+Flexible PTO, health cover and a learning stipend. Apply today!

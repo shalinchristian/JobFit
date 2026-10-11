@@ -1,0 +1,4 @@
+Meera Iyer - Frontend Developer
+Summary: Frontend developer with 4 years building React apps.
+Skills: JavaScript, TypeScript, React, Redux, HTML, CSS, Sass, Jest, Webpack, Git, REST API, Node.js
+Experience: Built component library in React; improved page load by 40%; wrote Jest unit tests; CI/CD with GitHub Actions.

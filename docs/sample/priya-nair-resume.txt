@@ -1,0 +1,18 @@
+Priya Nair - Senior Backend Engineer
+Pune, India | priya.nair@example.com | github.com/priyanair
+SUMMARY
+Backend engineer with 7 years building REST APIs and microservices in C# and ASP.NET Core.
+EXPERIENCE
+Lead Backend Engineer, CargoFlow (2021-present)
+- Designed ASP.NET Core 8 microservices with Entity Framework Core and PostgreSQL serving 2M requests/day
+- Introduced Redis caching, cutting p95 latency by 40%
+- Containerised 14 services with Docker and deployed to Kubernetes (AKS) on Azure using Terraform
+- Built CI/CD pipelines in GitHub Actions with xUnit unit and integration tests
+- Implemented event-driven order workflows with RabbitMQ; added OpenTelemetry tracing and Grafana dashboards
+- Mentored 4 junior engineers and worked closely with product managers
+Software Engineer, Infobyte (2018-2021)
+- Built REST APIs in C# and SQL Server, gRPC services, Git-based code review
+SKILLS
+C#, .NET 8, ASP.NET Core, EF Core, PostgreSQL, SQL, Redis, Docker, Kubernetes, Azure, Terraform, GitHub Actions, xUnit, RabbitMQ, gRPC, OpenTelemetry, Grafana, Git
+EDUCATION
+B.E. Computer Engineering, Pune University

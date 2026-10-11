@@ -1,0 +1,12 @@
+Data Analyst - Kestrel Retail Group, Leeds (Hybrid)
+Join our insights team to turn data into decisions for stores and ecommerce.
+Responsibilities:
+- Write complex SQL queries against Snowflake and BigQuery
+- Build dashboards in Power BI and Tableau for stakeholders
+- Analyse datasets with Python (pandas, NumPy) and Excel, including pivot tables
+- Run A/B tests and statistical analysis; forecast demand
+- Build ETL pipelines with dbt and Airflow
+- Present findings to stakeholders and senior leadership
+Requirements: 2+ years as a data analyst, strong SQL, Excel, data visualization, statistics and communication.
+Nice to have: R, Looker, machine learning basics.
+We offer a competitive package, hybrid working and an annual bonus. Apply now!

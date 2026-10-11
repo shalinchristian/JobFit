@@ -21,3 +21,13 @@ dist/
 # OS-specific files
 desktop.ini
 Thumbs.db
+
+# .NET build output
+bin/
+obj/
+
+# JobFit tracker database
+*.db
+*.db-shm
+*.db-wal
+.pytest_cache/

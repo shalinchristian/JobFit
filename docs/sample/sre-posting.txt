@@ -1,0 +1,12 @@
+Site Reliability Engineer - Halcyon Payments, Nagpur (On-site)
+You'll keep our payment platform fast and available around the clock.
+Responsibilities:
+- Run and scale workloads on Kubernetes (EKS) on AWS; package apps with Helm and deploy with Argo CD
+- Manage infrastructure as code with Terraform and configuration with Ansible
+- Build monitoring and alerting with Prometheus, Grafana and PagerDuty; define SLOs and error budgets
+- Lead incident response, write blameless postmortems and drive root cause analysis
+- Automate toil with Python, Go and Bash scripting on Linux
+- Maintain CI/CD pipelines in Jenkins and GitHub Actions; tune Nginx and load balancers
+Requirements: 4+ years in SRE or DevOps, strong Linux, networking (TCP/IP, DNS), Kubernetes, Terraform, AWS and on-call experience.
+Nice to have: Istio service mesh, ELK stack, chaos engineering.
+Perks include an equity plan, wellness allowance and quarterly hackathons. Apply now!

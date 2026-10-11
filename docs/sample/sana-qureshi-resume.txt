@@ -1,0 +1,3 @@
+Sana Qureshi - Android Developer
+Skills: Kotlin, Java, Jetpack Compose, MVVM, Coroutines, Room, Retrofit, Hilt, JUnit, Espresso, Firebase, Gradle, Git
+Experience: Shipped 3 apps on Google Play with 500k installs; migrated XML views to Jetpack Compose; added Crashlytics; wrote unit tests with JUnit and Mockito.

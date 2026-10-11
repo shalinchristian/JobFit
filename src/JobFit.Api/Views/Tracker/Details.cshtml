@@ -1,0 +1,29 @@
+@model FitResultViewModel
+@{
+    ViewData["Title"] = Model.JobTitle;
+    ViewData["Nav"] = "tracker";
+}
+<div class="page-head">
+    <a class="back" href="/Tracker">← Tracker</a>
+    <div class="head-actions">
+        <form method="post" action="/Tracker/Status/@Model.SavedId" class="inline" data-autosubmit>
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="returnTo" value="details" />
+            <label class="status-select status-@(Model.Status is JobStatus st ? StatusUi.Css(st) : "saved")">
+                <span class="sr-only">Status</span>
+                <select name="status">
+                    @foreach (var s in StatusUi.All)
+                    {
+                        <option value="@s" selected="@(Model.Status == s)">@s</option>
+                    }
+                </select>
+            </label>
+            <noscript><button class="btn btn-ghost" type="submit">Update</button></noscript>
+        </form>
+        <form method="post" action="/Tracker/Delete/@Model.SavedId" class="inline" data-confirm="Remove this job from your tracker?">
+            @Html.AntiForgeryToken()
+            <button class="btn btn-ghost btn-danger" type="submit">Delete</button>
+        </form>
+    </div>
+</div>
+<partial name="_FitResult" model="Model" />

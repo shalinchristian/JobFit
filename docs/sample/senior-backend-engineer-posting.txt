@@ -1,0 +1,12 @@
+Senior Backend Engineer (.NET) - Northwind Labs, Pune (Hybrid)
+About the role: You will design and build REST APIs and microservices that power our logistics platform.
+Responsibilities:
+- Build and maintain services in C# and ASP.NET Core 8 with Entity Framework Core
+- Design PostgreSQL schemas, write performant SQL, and use Redis for caching
+- Containerise services with Docker and deploy to Kubernetes on Azure
+- Own CI/CD pipelines in GitHub Actions; write unit and integration tests with xUnit
+- Work with RabbitMQ for messaging and event-driven workflows
+- Collaborate with product managers and mentor junior engineers
+Requirements: 5+ years of backend development, strong C#, REST API design, SQL, Docker, Git, and clear communication.
+Nice to have: Kubernetes, Terraform, gRPC, observability with OpenTelemetry and Grafana.
+We offer competitive salary, flexible hours and a learning budget. Apply now!

@@ -1,0 +1,43 @@
+@{
+    var section = ViewData["Nav"] as string ?? "check";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(ViewData["Title"] is string t ? t + " · JobFit" : "JobFit · Are you ready to apply?")</title>
+    <link rel="icon" href="~/img/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <a class="brand" href="/">
+                <img src="~/img/logo.svg" alt="" width="28" height="28" />
+                <span>JobFit</span>
+            </a>
+            <nav class="nav">
+                <a href="/" class="@(section == "check" ? "active" : "")">Check a job</a>
+                <a href="/Tracker" class="@(section == "tracker" ? "active" : "")">Tracker</a>
+                <a href="/swagger" class="muted-link">API</a>
+            </nav>
+        </div>
+    </header>
+
+    @if (TempData["Toast"] is string toast)
+    {
+        <div class="toast" role="status">@toast</div>
+    }
+
+    <main class="wrap main">
+        @RenderBody()
+    </main>
+
+    <footer class="wrap footer">
+        <span>JobFit checks your resume against a job before you apply. Build the resume itself in Resqora.</span>
+        <span>Runs locally. Your files are not stored unless you save a job.</span>
+    </footer>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

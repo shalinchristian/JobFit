@@ -1,0 +1,70 @@
+@model CheckFormViewModel
+@{
+    ViewData["Title"] = "Check a job";
+    ViewData["Nav"] = "check";
+}
+<section class="hero">
+    <p class="eyebrow">Fit check · Gap plan · Interview prep</p>
+    <h1>Are you ready to apply?</h1>
+    <p class="lead">Drop in your resume and the job posting. JobFit scores the fit, shows the skills you're missing with what to do about each one, and gives you questions to practice.</p>
+</section>
+
+<form class="card form-card" method="post" action="/Home/Check" enctype="multipart/form-data" id="check-form">
+    @Html.AntiForgeryToken()
+
+    @if (!string.IsNullOrEmpty(Model.Error))
+    {
+        <div class="alert alert-error" role="alert">@Model.Error</div>
+    }
+
+    <div class="grid-2">
+        <label class="field">
+            <span>Job title</span>
+            <input name="JobTitle" value="@Model.JobTitle" placeholder="e.g. Backend Developer" required maxlength="200" />
+        </label>
+        <label class="field">
+            <span>Company <em>optional</em></span>
+            <input name="Company" value="@Model.Company" placeholder="e.g. Northwind Labs" maxlength="200" />
+        </label>
+    </div>
+
+    <div class="field">
+        <span>Your resume</span>
+        <label class="dropzone" data-dropzone>
+            <input type="file" name="ResumeFile" accept="@DocumentTextExtractor.AcceptAttribute" required data-max-bytes="@DocumentTextExtractor.MaxFileBytes" />
+            <span class="dz-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 17v-6"/><path d="m9 13 3-3 3 3"/></svg>
+            </span>
+            <span class="dz-text"><strong>Choose a file</strong> or drag it here</span>
+            <span class="dz-hint">@DocumentTextExtractor.HumanTypes · up to @(DocumentTextExtractor.MaxFileBytes / (1024 * 1024)) MB</span>
+            <span class="dz-file" data-filename></span>
+            <span class="dz-error" data-file-error role="alert"></span>
+        </label>
+    </div>
+
+    <div class="field">
+        <div class="field-head">
+            <span>Job posting</span>
+            <label class="link-btn">
+                <input type="file" name="JobDescriptionFile" accept="@DocumentTextExtractor.AcceptAttribute" hidden data-jd-file data-max-bytes="@DocumentTextExtractor.MaxFileBytes" />
+                or upload a file
+            </label>
+        </div>
+        <textarea name="JobDescriptionText" rows="9" placeholder="Paste the full job posting here: responsibilities, requirements, nice-to-haves...">@Model.JobDescriptionText</textarea>
+        <span class="hint" data-jd-filename></span>
+    </div>
+
+    <div class="form-actions">
+        <button class="btn btn-primary" type="submit" data-submit>
+            <span>Check my fit</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </button>
+        <span class="hint">Takes a few seconds. Nothing is saved until you click "Save to tracker".</span>
+    </div>
+</form>
+
+<section class="steps">
+    <div class="step"><span class="step-n">1</span><h3>Fit score</h3><p>A 0–100 match from a sentence-embedding model, plus the skills you have and the ones you don't.</p></div>
+    <div class="step"><span class="step-n">2</span><h3>Gap plan</h3><p>One concrete action per missing skill: point to a project, learn it, or reword what you already did.</p></div>
+    <div class="step"><span class="step-n">3</span><h3>Interview prep</h3><p>Practice questions built from this posting, then track the application from Saved to Offer.</p></div>
+</section>

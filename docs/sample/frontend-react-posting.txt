@@ -1,0 +1,12 @@
+Frontend Engineer (React) - Brightloop, Coimbatore (Remote-friendly)
+We're hiring a frontend engineer to build delightful web apps for our customers.
+Responsibilities:
+- Build reusable UI components in React and TypeScript with Next.js
+- Manage state with Redux and React Query; consume REST APIs and GraphQL
+- Write unit tests with Jest and React Testing Library, and end-to-end tests with Cypress
+- Ensure accessibility (WCAG) and responsive design using CSS, Sass and Tailwind CSS
+- Optimise web performance and Core Web Vitals; work with Webpack and Vite
+- Collaborate with designers in Figma and ship via CI/CD on Vercel
+Requirements: 3+ years with JavaScript, React, HTML, CSS, Git and Node.js tooling.
+Nice to have: Storybook, React Native, design systems.
+Great benefits, generous leave, team offsites and a home-office stipend. Apply today!

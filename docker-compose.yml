@@ -1,15 +1,36 @@
 services:
-  python-service:
-    build: ./PythonService
+  nlp:
+    build:
+      context: ./services/nlp
+      args:
+        PRELOAD_MODEL: "0"   # set to "1" to bake the model into the image
     ports:
       - "5001:5001"
+    volumes:
+      - hf-cache:/models     # Hugging Face model cache (HF_HOME)
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:5001/health', timeout=3).status == 200 else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 180s   # first start downloads the model into the hf-cache volume
 
-  resume-api:
-    build: ./ResumeAPI
+  jobfit:
+    build:
+      context: .
+      dockerfile: src/JobFit.Api/Dockerfile
     ports:
-      - "5000:5000"  
+      - "5000:5000"
     depends_on:
-      - python-service
+      nlp:
+        condition: service_healthy
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - PythonService__BaseUrl=http://python-service:5001
+      - PythonService__BaseUrl=http://nlp:5001
+      - Demo__Seed=false
+    volumes:
+      - jobfit-data:/data
+
+volumes:
+  jobfit-data:
+  hf-cache:

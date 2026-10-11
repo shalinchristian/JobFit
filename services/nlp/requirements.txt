@@ -1,0 +1,7 @@
+# Ranges chosen so wheels exist for Python 3.10 through 3.13.
+# In Docker, CPU-only torch is installed first (see Dockerfile) so pip doesn't pull CUDA builds.
+flask>=3.0.3,<4
+sentence-transformers>=2.7,<6
+scikit-learn>=1.5.2,<2
+numpy>=1.26.4,<3
+gunicorn>=22,<24

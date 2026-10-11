@@ -1,0 +1,80 @@
+@model List<JobSummaryDto>
+@{
+    ViewData["Title"] = "Tracker";
+    ViewData["Nav"] = "tracker";
+    var counts = StatusUi.All.ToDictionary(s => s, s => Model.Count(j => j.Status == s));
+    var avg = Model.Count > 0 ? ScoreBands.Round(Model.Average(j => j.Score)) : 0;
+}
+<div class="page-head">
+    <div>
+        <h1 class="page-title">Your applications</h1>
+        <p class="muted">@StatusUi.Plural(Model.Count, "job") checked@(Model.Count > 0 ? $" · average fit {avg}" : "")</p>
+    </div>
+    <a class="btn btn-primary" href="/">+ Check a new job</a>
+</div>
+
+<div class="status-strip">
+    @foreach (var s in StatusUi.All)
+    {
+        <div class="status-count status-@StatusUi.Css(s)"><strong>@counts[s]</strong><span>@s</span></div>
+    }
+</div>
+
+@if (Model.Count == 0)
+{
+    <section class="card empty-state">
+        <h2>No jobs yet</h2>
+        <p>Run a fit check and click "Save to tracker" to start your list.</p>
+        <a class="btn btn-primary" href="/">Check a job</a>
+    </section>
+}
+else
+{
+    <section class="card table-card">
+        <table class="jobs">
+            <thead>
+                <tr><th>Role</th><th>Fit</th><th>Checked</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var j in Model)
+                {
+                    var tone = ScoreBands.Tone(j.Score);
+                    <tr>
+                        <td data-label="Role">
+                            <a class="job-link" href="/Tracker/Details/@j.Id">
+                                <span class="avatar" aria-hidden="true">@(string.IsNullOrEmpty(j.Company) ? "?" : j.Company[..1].ToUpperInvariant())</span>
+                                <span><strong>@j.Title</strong><small>@j.Company</small></span>
+                            </a>
+                        </td>
+                        <td data-label="Fit">
+                            <span class="score tone-@tone"><span class="bar"><i style="width:@ScoreBands.Round(j.Score)%"></i></span><b>@ScoreBands.Round(j.Score)</b></span>
+                        </td>
+                        <td data-label="Checked" class="muted nowrap">@j.CreatedAt.ToLocalTime().ToString("d MMM yyyy")</td>
+                        <td data-label="Status">
+                            <form method="post" action="/Tracker/Status/@j.Id" class="inline" data-autosubmit>
+                                @Html.AntiForgeryToken()
+                                <label class="status-select status-@StatusUi.Css(j.Status)">
+                                    <span class="sr-only">Status for @j.Title</span>
+                                    <select name="status">
+                                        @foreach (var s in StatusUi.All)
+                                        {
+                                            <option value="@s" selected="@(j.Status == s)">@s</option>
+                                        }
+                                    </select>
+                                </label>
+                                <noscript><button class="btn btn-ghost" type="submit">Update</button></noscript>
+                            </form>
+                        </td>
+                        <td class="row-actions">
+                            <a class="icon-btn" href="/Tracker/Details/@j.Id" title="Open">Open</a>
+                            <form method="post" action="/Tracker/Delete/@j.Id" class="inline" data-confirm="Remove @j.Title from your tracker?">
+                                @Html.AntiForgeryToken()
+                                <button class="icon-btn danger" type="submit" title="Delete">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+}

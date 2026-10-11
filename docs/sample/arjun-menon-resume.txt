@@ -1,0 +1,3 @@
+Arjun Menon - DevOps Engineer
+Skills: AWS, Kubernetes, Helm, Terraform, Ansible, Prometheus, Grafana, Linux, Bash, Python, Jenkins, GitHub Actions, Nginx, Docker
+Experience: Ran EKS clusters for 40 services; wrote Terraform modules; built Prometheus alerting and Grafana dashboards; on-call rotation, led incident response and wrote postmortems; automated deployments with Argo CD.
