@@ -157,7 +157,7 @@ The .NET tests cover score bands (label, summary, recommendation and tone agree)
 
 ## History
 
-JobFit was the **ResumeMatchingSystem** project, which was a recruiter-side resume-vs-job matcher. See [CHANGELOG.md](CHANGELOG.md).
+JobFit was the **ResumeMatchingSystem** project, which was a recruiter-side resume-vs-job matcher. 
 
 ## License
 
